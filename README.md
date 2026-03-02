@@ -38,11 +38,11 @@ Desarrollar una API REST que gestione productos y se integre con un cliente Flut
 - **Testing:** Postman para API, pruebas unitarias en Flutter
 - **Control de versiones:** Git + GitHub
 
-## Arquitectura (resumen simple)
+## Arquitectura 
 
 Cliente (Flutter) → API (Backend Node/Express) → Base de datos
 
-## Endpoints core (priorizados)
+## Endpoints core 
 
 1. `POST /api/products` – crear un producto
 2. `GET /api/products` – listar productos
@@ -53,7 +53,7 @@ Cliente (Flutter) → API (Backend Node/Express) → Base de datos
 
 1. Clonar repositorio
    ```bash
-   git clone <URL>
+   git clone <https://github.com/Mau995/ProyectoEspecialidad.git >
    ```
 2. Backend – instalar dependencias y correr el servidor
    ```bash
@@ -69,7 +69,7 @@ Cliente (Flutter) → API (Backend Node/Express) → Base de datos
    flutter run
    ```
 
-## Variables de entorno (ejemplo)
+## Variables de entorno
 
 ```
 host= localhost
