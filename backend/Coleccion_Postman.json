@@ -1,0 +1,230 @@
+{
+  "info": {
+    "name": "API Gestor de Productos",
+    "description": "Colección de endpoints para pruebas de la API de Productos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000"
+        },
+        "description": "Verifica que el servidor y la base de datos estén funcionando correctamente"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Listar Productos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/productos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "productos"
+          ]
+        },
+        "description": "Obtiene la lista de todos los productos ordenados por fecha de vencimiento"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Crear Producto",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Leche Entera\",\n  \"expiration_date\": \"2026-03-15\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/productos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "productos"
+          ]
+        },
+        "description": "Crea un nuevo producto en la base de datos"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Crear Producto - Queso",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Queso Cheddar\",\n  \"expiration_date\": \"2026-05-20\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/productos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "productos"
+          ]
+        },
+        "description": "Crea otro producto de ejemplo"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Crear Producto - Yogurt",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Yogurt Natural\",\n  \"expiration_date\": \"2026-06-10\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/productos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "productos"
+          ]
+        },
+        "description": "Crea un tercer producto de ejemplo"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Actualizar Producto (ID 1)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Leche Descremada\",\n  \"expiration_date\": \"2026-04-01\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/productos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "productos",
+            "1"
+          ]
+        },
+        "description": "Actualiza el nombre y la fecha de vencimiento del producto con ID 1"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Actualizar Solo Nombre (ID 2)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Queso Mozzarella\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/productos/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "productos",
+            "2"
+          ]
+        },
+        "description": "Actualiza solo el nombre del producto con ID 2"
+      },
+      "response": []
+    },
+    {
+      "name": "8. Actualizar Solo Fecha (ID 3)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"expiration_date\": \"2026-07-15\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/productos/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "productos",
+            "3"
+          ]
+        },
+        "description": "Actualiza solo la fecha de vencimiento del producto con ID 3"
+      },
+      "response": []
+    }
+  ]
+}
