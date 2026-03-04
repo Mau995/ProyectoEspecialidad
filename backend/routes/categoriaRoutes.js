@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const categoriaController = require('../controllers/categoriaController');
 
+/**
+ * Rutas de categorías (/api/categorias)
+ * - GET /        : listar
+ * - GET /:id     : obtener por id
+ * - POST /       : crear
+ * - PATCH /:id   : actualizar
+ * - DELETE /:id  : desactivar (soft delete)
+ */
 // Listar todas las categorías
 router.get('/', categoriaController.list);
 

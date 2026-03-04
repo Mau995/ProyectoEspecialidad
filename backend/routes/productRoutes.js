@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 
+/**
+ * Rutas de productos (/api/productos)
+ * - GET /        : listar productos
+ * - GET /:id     : obtener producto por id
+ * - POST /       : crear producto
+ * - PATCH /:id   : actualizar producto
+ * - GET /:id/lotes: obtener lotes FEFO del producto
+ */
 // Listar todos los productos
 router.get('/', productController.list);
 

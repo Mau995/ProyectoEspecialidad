@@ -1,6 +1,10 @@
 
 const db = require('../config/db');
 
+/**
+ * Modelo `Product` - operaciones CRUD y consultas relacionadas con productos
+ * - Incluye métodos para obtener lotes FEFO y calcular stock total.
+ */
 class Product {
   /**
    * Obtiene todos los productos con sus categorías

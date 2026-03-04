@@ -1,5 +1,9 @@
 const db = require('../config/db');
 
+/**
+ * Modelo `Categoria` - operaciones CRUD para categorías
+ * Métodos: `getAll`, `getById`, `create`, `update`, `delete`.
+ */
 class Categoria {
   /**
    * Obtiene todas las categorías

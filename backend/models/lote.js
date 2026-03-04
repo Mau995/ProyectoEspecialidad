@@ -1,5 +1,10 @@
 const db = require('../config/db');
 
+/**
+ * Modelo `Lote` - gestiona lotes de productos y consultas FEFO
+ * Métodos clave: `getAll`, `getById`, `create`, `update`,
+ * `getLotesProximosAVencer`, `getLotesVencidos`.
+ */
 class Lote {
   /**
    * Obtiene todos los lotes

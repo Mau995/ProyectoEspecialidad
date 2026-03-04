@@ -1,5 +1,10 @@
 const db = require('../config/db');
 
+/**
+ * Modelo `Almacen` - operaciones CRUD y consultas relacionadas con almacenes
+ * Métodos disponibles:
+ * - `getAll`, `getById`, `create`, `update`, `delete`, `getInventario`
+ */
 class Almacen {
   /**
    * Obtiene todos los almacenes

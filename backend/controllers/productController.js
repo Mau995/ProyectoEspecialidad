@@ -21,29 +21,6 @@ exports.list = async (req, res) => {
   }
 };
 
-const Product = require('../models/product');
-
-/**
- * Obtiene la lista de todos los productos
- * GET /api/productos
- */
-exports.list = async (req, res) => {
-  try {
-    const productos = await Product.getAll();
-    res.json({
-      exito: true,
-      dato: productos,
-      cantidad: productos.length
-    });
-  } catch (err) {
-    console.error('Error al listar productos:', err);
-    res.status(500).json({ 
-      exito: false,
-      error: 'Error al listar los productos' 
-    });
-  }
-};
-
 /**
  * Obtiene un producto por ID
  * GET /api/productos/:id

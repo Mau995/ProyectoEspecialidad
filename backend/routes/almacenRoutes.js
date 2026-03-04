@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const almacenController = require('../controllers/almacenController');
 
+/**
+ * Rutas de almacenes (/api/almacenes)
+ * - GET /             : listar almacenes
+ * - GET /:id          : obtener almacén por id
+ * - GET /:id/inventario: obtener inventario por almacén
+ * - POST /            : crear almacén
+ * - PATCH /:id        : actualizar almacén
+ * - DELETE /:id       : desactivar almacén
+ */
 // Listar todos los almacenes
 router.get('/', almacenController.list);
 

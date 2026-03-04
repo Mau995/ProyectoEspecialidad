@@ -44,10 +44,14 @@ Cliente (Flutter) → API (Backend Node/Express) → Base de datos
 
 ## Endpoints core 
 
-1. `POST /api/products` – crear un producto
-2. `GET /api/products` – listar productos
-3. `PATCH /api/products/:id` – actualizar un producto
-4. (opcional) `DELETE /api/products/:id` – eliminar un producto
+1. `POST /api/productos` – crear un producto (spanish path)
+2. `GET /api/productos` – listar productos
+3. `PATCH /api/productos/:id` – actualizar un producto
+4. (opcional) `DELETE /api/productos/:id` – eliminar un producto
+
+Se añadió autenticación JWT en el backend, por lo que antes de
+consumir las rutas protegidas es necesario obtener un token desde
+`POST /api/auth/login`.
 
 ## Cómo ejecutar el proyecto (local)
 
