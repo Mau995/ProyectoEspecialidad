@@ -1,16 +1,16 @@
 const express = require('express');
-const { login } = require('../controllers/authController');
-
 const router = express.Router();
+const authController = require('../controllers/authController');
+const authenticate = require('../middleware/auth');
+const requirePrivilegedRole = require('../middleware/requirePrivilegedRole');
 
-/**
- * Rutas de autenticación
- * - POST /api/auth/register  : registra usuario (sin validación avanzada)
- * - POST /api/auth/login     : autentica y devuelve JWT
- */
-router.post('/register', require('../controllers/authController').register);
+// Ruta para registrar usuario: POST /api/auth/register
+router.post('/register', authenticate, requirePrivilegedRole, authController.register);
 
-// POST /api/auth/login
-router.post('/login', login);
+// Ruta para login: POST /api/auth/login
+router.post('/login', authController.login);
+
+// Perfil usuario autenticado: GET /api/auth/me
+router.get('/me', authenticate, authController.me);
 
 module.exports = router;

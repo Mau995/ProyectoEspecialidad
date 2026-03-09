@@ -183,3 +183,63 @@ exports.getLotesVencidos = async (req, res) => {
     });
   }
 };
+
+/**
+ * Obtiene lotes para despacho FEFO.
+ * GET /api/lotes/fefo-despacho
+ */
+exports.getLotesFefoDespacho = async (req, res) => {
+  try {
+    const lotes = await Lote.getLotesFefoParaDespacho();
+
+    return res.json({
+      exito: true,
+      dato: lotes,
+      cantidad: lotes.length,
+      criterio: 'FEFO',
+    });
+  } catch (err) {
+    console.error('Error al obtener FEFO despacho:', err);
+    return res.status(500).json({
+      exito: false,
+      error: 'Error al obtener lotes FEFO para despacho',
+    });
+  }
+};
+
+/**
+ * Desactiva un lote
+ * DELETE /api/lotes/:id
+ */
+exports.delete = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || isNaN(id)) {
+      return res.status(400).json({
+        exito: false,
+        error: 'ID de lote inválido'
+      });
+    }
+
+    const eliminado = await Lote.delete(id, req.user?.id);
+
+    if (!eliminado) {
+      return res.status(404).json({
+        exito: false,
+        error: 'Lote no encontrado'
+      });
+    }
+
+    return res.json({
+      exito: true,
+      mensaje: 'Lote eliminado exitosamente'
+    });
+  } catch (err) {
+    console.error('Error al eliminar lote:', err);
+    return res.status(500).json({
+      exito: false,
+      error: err.message || 'Error al eliminar el lote'
+    });
+  }
+};

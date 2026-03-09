@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const almacenController = require('../controllers/almacenController');
+const requireRoles = require('../middleware/requireRoles');
+
+const privileged = requireRoles(['SUPERUSUARIO', 'ADMINISTRADOR']);
+const allowedAlmacenViewer = requireRoles(['SUPERUSUARIO', 'ADMINISTRADOR', 'ALMACENERO']);
 
 /**
  * Rutas de almacenes (/api/almacenes)
@@ -12,21 +16,21 @@ const almacenController = require('../controllers/almacenController');
  * - DELETE /:id       : desactivar almacén
  */
 // Listar todos los almacenes
-router.get('/', almacenController.list);
+router.get('/', allowedAlmacenViewer, almacenController.list);
 
 // Obtener un almacén específico
-router.get('/:id', almacenController.getById);
+router.get('/:id', allowedAlmacenViewer, almacenController.getById);
 
 // Obtener inventario de un almacén
-router.get('/:id/inventario', almacenController.getInventario);
+router.get('/:id/inventario', allowedAlmacenViewer, almacenController.getInventario);
 
 // Crear un nuevo almacén
-router.post('/', almacenController.create);
+router.post('/', privileged, almacenController.create);
 
 // Actualizar un almacén
-router.patch('/:id', almacenController.update);
+router.patch('/:id', privileged, almacenController.update);
 
 // Eliminar un almacén
-router.delete('/:id', almacenController.delete);
+router.delete('/:id', privileged, almacenController.delete);
 
 module.exports = router;

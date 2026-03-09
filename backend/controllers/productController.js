@@ -168,3 +168,40 @@ exports.getLotes = async (req, res) => {
     });
   }
 };
+
+/**
+ * Desactiva un producto
+ * DELETE /api/productos/:id
+ */
+exports.delete = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || isNaN(id)) {
+      return res.status(400).json({
+        exito: false,
+        error: 'ID de producto inválido'
+      });
+    }
+
+    const eliminado = await Product.delete(id, req.user?.id);
+
+    if (!eliminado) {
+      return res.status(404).json({
+        exito: false,
+        error: 'Producto no encontrado'
+      });
+    }
+
+    return res.json({
+      exito: true,
+      mensaje: 'Producto eliminado exitosamente'
+    });
+  } catch (err) {
+    console.error('Error al eliminar producto:', err);
+    return res.status(500).json({
+      exito: false,
+      error: err.message || 'Error al eliminar el producto'
+    });
+  }
+};

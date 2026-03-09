@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
+const requireRoles = require('../middleware/requireRoles');
+
+const privileged = requireRoles(['SUPERUSUARIO', 'ADMINISTRADOR']);
 
 /**
  * Rutas de productos (/api/productos)
@@ -11,18 +14,21 @@ const productController = require('../controllers/productController');
  * - GET /:id/lotes: obtener lotes FEFO del producto
  */
 // Listar todos los productos
-router.get('/', productController.list);
+router.get('/', privileged, productController.list);
 
 // Obtener un producto específico
-router.get('/:id', productController.getById);
+router.get('/:id', privileged, productController.getById);
 
 // Crear un nuevo producto
-router.post('/', productController.create);
+router.post('/', privileged, productController.create);
 
 // Actualizar un producto
-router.patch('/:id', productController.update);
+router.patch('/:id', privileged, productController.update);
+
+// Eliminar (desactivar) un producto
+router.delete('/:id', privileged, productController.delete);
 
 // Obtener lotes FEFO de un producto
-router.get('/:id/lotes', productController.getLotes);
+router.get('/:id/lotes', privileged, productController.getLotes);
 
 module.exports = router;

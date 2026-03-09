@@ -120,6 +120,7 @@ CREATE TABLE movimientos (
     mov_tipo ENUM('ENTRADA','SALIDA','TRASPASO'),
     mov_fecha DATETIME,
     mov_observacion VARCHAR(200),
+    usu_id INT,
 
     Fx_Creacion DATE,
     Fx_Modif DATE,

@@ -147,6 +147,53 @@ class Lote {
     `);
     return rows;
   }
+
+  /**
+   * Lotes disponibles para despacho FEFO.
+   * Solo lotes activos con cantidad > 0 y sin vencer.
+   */
+  static async getLotesFefoParaDespacho() {
+    const [rows] = await db.query(`
+      SELECT l.lot_id, l.prod_id, p.prod_nombre, l.alm_id, a.alm_nombre,
+             l.lot_fecha_vencimiento, l.lot_cantidad,
+             DATEDIFF(l.lot_fecha_vencimiento, CURDATE()) as dias_para_vencer
+      FROM lotes l
+      JOIN productos p ON l.prod_id = p.prod_id
+      JOIN almacenes a ON l.alm_id = a.alm_id
+      WHERE l.Estado != 0
+        AND p.Estado != 0
+        AND l.lot_cantidad > 0
+        AND l.lot_fecha_vencimiento >= CURDATE()
+      ORDER BY l.lot_fecha_vencimiento ASC, l.lot_id ASC
+    `);
+    return rows;
+  }
+
+  /**
+   * Desactiva un lote y descuenta su saldo del stock total del producto.
+   */
+  static async delete(id, Usu_Modif) {
+    const lote = await this.getById(id);
+    if (!lote) {
+      throw new Error('Lote no encontrado');
+    }
+
+    await db.query(
+      `UPDATE productos
+       SET prod_stock_total = prod_stock_total - ?, Fx_Modif = NOW(), Usu_Modif = ?
+       WHERE prod_id = ?`,
+      [lote.lot_cantidad || 0, Usu_Modif || 1, lote.prod_id]
+    );
+
+    const [result] = await db.query(
+      `UPDATE lotes
+       SET Estado = 0, Fx_Modif = NOW(), Usu_Modif = ?
+       WHERE lot_id = ?`,
+      [Usu_Modif || 1, id]
+    );
+
+    return result.affectedRows > 0;
+  }
 }
 
 module.exports = Lote;

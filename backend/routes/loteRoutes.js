@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const loteController = require('../controllers/loteController');
+const requireRoles = require('../middleware/requireRoles');
+
+const privileged = requireRoles(['SUPERUSUARIO', 'ADMINISTRADOR']);
+const allowedLotesViewer = requireRoles(['SUPERUSUARIO', 'ADMINISTRADOR', 'ALMACENERO']);
+const allowedFefoDespacho = requireRoles(['SUPERUSUARIO', 'ADMINISTRADOR', 'DESPACHADOR']);
 
 /**
  * Rutas de lotes (/api/lotes)
@@ -12,21 +17,27 @@ const loteController = require('../controllers/loteController');
  * - PATCH /:id                : actualizar lote
  */
 // Listar todos los lotes (ordenados por FEFO)
-router.get('/', loteController.list);
+router.get('/', allowedLotesViewer, loteController.list);
+
+// Listado FEFO de despacho (prioridad de vencimiento)
+router.get('/fefo-despacho', allowedFefoDespacho, loteController.getLotesFefoDespacho);
 
 // Obtener lotes próximos a vencer
-router.get('/proximos-a-vencer', loteController.getLotesProximosAVencer);
+router.get('/proximos-a-vencer', allowedLotesViewer, loteController.getLotesProximosAVencer);
 
 // Obtener lotes vencidos
-router.get('/vencidos', loteController.getLotesVencidos);
+router.get('/vencidos', allowedLotesViewer, loteController.getLotesVencidos);
 
 // Obtener un lote específico
-router.get('/:id', loteController.getById);
+router.get('/:id', allowedLotesViewer, loteController.getById);
 
 // Crear un nuevo lote
-router.post('/', loteController.create);
+router.post('/', privileged, loteController.create);
 
 // Actualizar un lote
-router.patch('/:id', loteController.update);
+router.patch('/:id', privileged, loteController.update);
+
+// Eliminar (desactivar) lote
+router.delete('/:id', privileged, loteController.delete);
 
 module.exports = router;

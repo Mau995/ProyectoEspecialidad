@@ -4,6 +4,9 @@ const productRoutes = require('./routes/productRoutes');
 const categoriaRoutes = require('./routes/categoriaRoutes');
 const almacenRoutes = require('./routes/almacenRoutes');
 const loteRoutes = require('./routes/loteRoutes');
+const movimientoRoutes = require('./routes/movimientoRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
+const rolRoutes = require('./routes/rolRoutes');
 // nuevo módulo de autenticación
 const authRoutes = require('./routes/authRoutes');
 const authenticate = require('./middleware/auth');
@@ -14,18 +17,18 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Middleware CORS (opcional, pero �til para conectar con Flutter)
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
   }
   next();
 });
 
-// Ruta de salud para verificar conexi�n con base de datos
+// Ruta de salud para verificar conexion con base de datos
 app.get('/', async (req, res) => {
   try {
     const db = require('./config/db');
@@ -33,7 +36,7 @@ app.get('/', async (req, res) => {
     res.json({
       exito: true,
       mensaje: 'Base de datos conectada correctamente',
-      servidor: 'Servidor de gesti�n FEFO activo'
+      servidor: 'Servidor de gestion FEFO activo'
     });
   } catch (err) {
     console.error('Error al verificar BD:', err);
@@ -46,12 +49,14 @@ app.get('/', async (req, res) => {
 });
 
 // Rutas de API
-app.use('/api/auth', authRoutes); // login / register etc
-// protect data endpoints with JWT authentication
+app.use('/api/auth', authRoutes); // login / register 
 app.use('/api/productos', authenticate, productRoutes);
 app.use('/api/categorias', authenticate, categoriaRoutes);
 app.use('/api/almacenes', authenticate, almacenRoutes);
 app.use('/api/lotes', authenticate, loteRoutes);
+app.use('/api/movimientos', authenticate, movimientoRoutes);
+app.use('/api/usuarios', authenticate, usuarioRoutes);
+app.use('/api/roles', authenticate, rolRoutes);
 
 // Manejo de rutas no encontradas
 app.use((req, res) => {

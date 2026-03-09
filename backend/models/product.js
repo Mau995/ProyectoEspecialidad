@@ -101,6 +101,20 @@ class Product {
   }
 
   /**
+   * Desactiva un producto (soft delete)
+   */
+  static async delete(id, Usu_Modif) {
+    const [result] = await db.query(
+      `UPDATE productos
+       SET Estado = 0, Fx_Modif = NOW(), Usu_Modif = ?
+       WHERE prod_id = ?`,
+      [Usu_Modif || 1, id]
+    );
+
+    return result.affectedRows > 0;
+  }
+
+  /**
    * Obtiene el stock total de un producto
    */
   static async getStockTotal(id) {
